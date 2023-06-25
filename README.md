@@ -7,4 +7,19 @@ A half adder is a digital logic circuit that performs binary addition of two sin
 ## Half Adder RTL
 ![image](https://github.com/Pragati2501/RTL-to-GDS-flow-of-Half-Adder/assets/76483382/0c88b38b-48ec-4200-a919-a7c5b407bad8)
 
+## Half Adder Layout
+* Tool Used : Magic
+* No Drc errors
+
+  ![photo](https://github.com/Pragati2501/RTL-to-GDS-flow-of-Half-Adder/assets/76483382/a15d7dbf-55d8-4ffa-85c4-7b05aeee0b3b)
+
+## LTSpice Circuit
+![image](https://github.com/Pragati2501/RTL-to-GDS-flow-of-Half-Adder/assets/76483382/da8f292f-89d9-4d2e-888a-fba55536926e)
+
+### Simulation
+![Screenshot (7)](https://github.com/Pragati2501/RTL-to-GDS-flow-of-Half-Adder/assets/76483382/e1b625c6-f345-47cb-bbef-eed82a346544)
+
+
+
+
 
