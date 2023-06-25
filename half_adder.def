@@ -1,0 +1,115 @@
+VERSION 5.6 ;
+NAMESCASESENSITIVE ON ;
+DIVIDERCHAR "/" ;
+BUSBITCHARS "<>" ;
+DESIGN half_adder ;
+UNITS DISTANCE MICRONS 100 ;
+
+DIEAREA ( -480 0 ) ( 6000 3600 ) ;
+
+TRACKS Y 0 DO 13 STEP 300 LAYER metal1 ;
+TRACKS X -480.0 DO 28 STEP 240 LAYER metal2 ;
+TRACKS Y 0 DO 7 STEP 600 LAYER metal3 ;
+
+
+VIAS 2 ;
+- viagen21_post
++ RECT metal1 ( -360 -60 ) ( 360 60 )
++ RECT metal2 ( -360 -60 ) ( 360 60 )
++ RECT via ( -240 -30 ) ( -180 30 )
++ RECT via ( -30 -30 ) ( 30 30 )
++ RECT via ( 180 -30 ) ( 240 30 ) ;
+- viagen32_post
++ RECT metal3 ( -360 -90 ) ( 360 90 )
++ RECT metal2 ( -360 -90 ) ( 360 90 )
++ RECT via2 ( -300 -30 ) ( -240 30 )
++ RECT via2 ( -30 -30 ) ( 30 30 )
++ RECT via2 ( 240 -30 ) ( 300 30 ) ;
+END VIAS
+
+COMPONENTS 10 ;
+- XOR2X1_1 XOR2X1 + PLACED ( 120 150 ) S ;
+- FILL_0_0_0 FILL + PLACED ( 1800 150 ) FS ;
+- FILL_0_0_1 FILL + PLACED ( 2040 150 ) FS ;
+- FILL_0_0_2 FILL + PLACED ( 2280 150 ) FS ;
+- AND2X2_1 AND2X2 + PLACED ( 2520 150 ) FS ;
+- BUFX2_2 BUFX2 + PLACED ( 3480 150 ) FS ;
+- FILL_0_1_0 FILL + PLACED ( 4200 150 ) FS ;
+- FILL_0_1_1 FILL + PLACED ( 4440 150 ) FS ;
+- FILL_0_1_2 FILL + PLACED ( 4680 150 ) FS ;
+- BUFX2_1 BUFX2 + PLACED ( 4920 150 ) FS ;
+END COMPONENTS
+
+PINS 4 ;
+- a + NET a
+  + LAYER metal3 ( 0 0 ) ( 1 1 )
+  + PLACED ( -240 2400 ) N ;
+- b + NET b
+  + LAYER metal2 ( 0 0 ) ( 1 1 )
+  + PLACED ( 1920 3600 ) N ;
+- s + NET s
+  + LAYER metal3 ( 0 0 ) ( 1 1 )
+  + PLACED ( 6000 3000 ) N ;
+- c + NET c
+  + LAYER metal3 ( 0 0 ) ( 1 1 )
+  + PLACED ( 6000 2400 ) N ;
+END PINS
+
+NETS 6 ;
+- b
+  ( PIN b ) 
+  ( AND2X2_1 A ) 
+  ( XOR2X1_1 A ) 
++ ROUTED metal1 ( 2640 2100 ) ( 1680 * ) 
+  NEW metal2 ( 1920 3600 ) ( * 2100 ) M2_M1 ;
+- a
+  ( PIN a ) 
+  ( AND2X2_1 B ) 
+  ( XOR2X1_1 B ) 
++ ROUTED metal1 ( 2880 1800 ) M2_M1 
+  NEW metal2 ( 2880 1800 ) M3_M2 
+  NEW metal3 ( 2880 1800 ) ( 240 * ) M3_M2 
+  NEW metal2 ( 240 1800 ) ( * 2100 ) M2_M1 
+  NEW metal3 ( -239 2400 ) ( * 1800 ) ( 240 * ) ;
+- _1_
+  ( BUFX2_2 A ) 
+  ( XOR2X1_1 Y ) 
++ ROUTED metal1 ( 3600 1800 ) M2_M1 
+  NEW metal2 ( 3600 1800 ) ( * 1200 ) M3_M2 
+  NEW metal3 ( 3600 1200 ) ( 960 * ) M3_M2 
+  NEW metal2 ( 960 1200 ) ( * 1800 ) M2_M1 ;
+- _0_
+  ( BUFX2_1 A ) 
+  ( AND2X2_1 Y ) 
++ ROUTED metal1 ( 5040 1800 ) M2_M1 
+  NEW metal2 ( 5040 1800 ) M3_M2 
+  NEW metal3 ( 5040 1800 ) ( 3360 * ) M3_M2 
+  NEW metal1 ( 3360 1800 ) M2_M1 ;
+- c
+  ( PIN c ) 
+  ( BUFX2_1 Y ) 
++ ROUTED metal3 ( 6000 2400 ) ( * 1800 ) ( 5520 * ) M3_M2 
+  NEW metal2 ( 5520 1800 ) ( * 2100 ) M2_M1 ;
+- s
+  ( PIN s ) 
+  ( BUFX2_2 Y ) 
++ ROUTED metal3 ( 6000 3000 ) ( * 3600 ) M3_M2 
+  NEW metal2 ( 6000 3600 ) ( 5520 * ) ( * 2400 ) M3_M2 
+  NEW metal3 ( 5520 2400 ) ( 4800 * ) M3_M2 
+  NEW metal2 ( 4800 2400 ) ( * 2100 ) M2_M1 
+  NEW metal1 ( 4800 2100 ) ( 4080 * ) ;
+END NETS
+
+SPECIALNETS 2 ;
+- vdd
++ FIXED metal1 120 ( 2160 150 ) ( * * ) viagen21_post
+  NEW metal2 180 ( 2160 150 ) ( * * ) viagen32_post
+  NEW metal3 180 ( 1800 150 ) ( 2520 150 )
+ ;
+- gnd
++ FIXED metal1 120 ( 4560 3150 ) ( * * ) viagen21_post
+  NEW metal2 180 ( 4560 3150 ) ( * * ) viagen32_post
+  NEW metal3 180 ( 4200 3150 ) ( 4920 3150 )
+ ;
+END SPECIALNETS
+END DESIGN
