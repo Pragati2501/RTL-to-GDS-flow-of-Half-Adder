@@ -243,4 +243,5 @@ rlabel polysilicon 122 -14 123 -13 1 va
 rlabel metal1 129 -19 130 -18 1 vab
 rlabel metal1 86 13 87 14 1 vsum
 rlabel metal1 -4 15 -4 15 1 vcarry
+rlabel metal1 29 -58 30 -57 1 gnd
 << end >>
